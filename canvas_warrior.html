@@ -1,0 +1,53 @@
+<html>
+<style>
+#can
+{
+  border:1px solid;
+}
+</style>
+
+<body>
+
+	<canvas width=500 height=500 id=can> </canvas>
+
+
+<script>
+var c = document.getElementById('can'),
+  d = c.getContext('2d'),
+  r = 50,
+  theta = 0,
+  x, y;
+
+//draw the starting pt of line to mid point
+d.moveTo(c.width / 2, c.height / 2);
+
+var timer = setInterval(function() {
+  theta += 0.01;
+  if (theta > 5) {
+    r = 50;
+  } else if (theta > 3) {
+    r = 70
+  } else if (theta > 2) {
+    r = 60;
+  }
+			//Power of polar coordinate system soh cah toa mantra
+  x = r * Math.cos(theta) + 250;
+  y = r * Math.sin(theta) + 250;
+
+  d.lineTo(x, y);
+  d.stroke();
+
+  if (theta > 12)
+  {
+  	clearInterval(timer);
+    d.beginPath();
+	d.arc(270,230,4,0,Math.PI*2);
+	d.stroke();
+  }
+
+}, 1000 / 100);
+
+</script>
+
+</body>
+</html>
