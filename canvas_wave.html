@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+Adding around 20 balls linearlly and using cosine function to make it move up and down with the range of amplitude give.
+-->
+  <meta charset="utf-8">
+  <title>Wave</title>
+</head>
+<body>
+<canvas id=can width=500 height=500></canvas>
+<script>
+var c = document.getElementById('can'),
+    d = c.getContext('2d'),
+    pos = 0,
+    amplitude=100,
+    radius = 25,
+    arr = [];
+    
+d.translate(0,c.height/2);
+
+function initBalls(){
+	for(var i=0;i<20;i++){
+    	pos = i*radius;
+		setTimeout(animator,350*i,pos); // increase the value 350 and see the change in wave.
+    	}
+}
+        
+function animator(position){
+	arr.push( new Ball(position) );  
+}
+
+function Ball(posX){
+	this.posx = posX;
+  this.posy = 0;
+  this.theta = 0;
+  
+	this.update = function (){
+  	this.theta +=0.01;
+    this.posy = amplitude*Math.cos(this.theta);
+  };
+  
+  this.draw = function (){
+  	d.arc(this.posx, this.posy,radius,0,Math.PI*2,false);
+    d.strokeStyle="green";    
+    d.stroke();
+  };
+	
+}
+
+function render(){
+c.width = c.width;
+d.translate(0,c.height/2);
+	for(var i=0;i<arr.length;i++)
+    {
+    		arr[i].update();
+        arr[i].draw();
+    }
+window.requestAnimationFrame(render);
+
+}
+
+initBalls();
+render();
+
+
+</script>
+</body>
+</html>
